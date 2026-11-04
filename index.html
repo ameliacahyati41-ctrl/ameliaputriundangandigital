@@ -1,0 +1,618 @@
+```html
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan Royal: Dono & Dini</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ruby: {
+                            900: '#3D020A',
+                            800: '#52040E',
+                            700: '#7A0C1B',
+                            600: '#A31227',
+                            500: '#C81E36',
+                        },
+                        gold: {
+                            light: '#FFF3B0',
+                            bright: '#F3C649',
+                            DEFAULT: '#D4AF37',
+                            metallic: '#E5C158',
+                            dark: '#9A7B1C',
+                            deep: '#6B540E'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        script: ['Great Vibes', 'cursive'],
+                        playfair: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #3D020A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #E5C158, #9A7B1C);
+            border-radius: 4px;
+        }
+
+        /* Songket Motif Pattern & Textures */
+        .bg-songket-ruby {
+            background-color: #52040E;
+            background-image: 
+                radial-gradient(circle, rgba(229, 193, 88, 0.12) 1.5px, transparent 1.5px),
+                linear-gradient(45deg, rgba(212, 175, 55, 0.08) 25%, transparent 25%, transparent 75%, rgba(212, 175, 55, 0.08) 75%),
+                linear-gradient(-45deg, rgba(212, 175, 55, 0.08) 25%, transparent 25%, transparent 75%, rgba(212, 175, 55, 0.08) 75%);
+            background-size: 18px 18px, 36px 36px, 36px 36px;
+            background-position: 0 0, 0 0, 18px 18px;
+        }
+
+        .bg-songket-dark {
+            background-color: #270106;
+            background-image: 
+                radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Gold Gradient Elements */
+        .gold-text {
+            background: linear-gradient(135deg, #FFF8CD 0%, #E5C158 40%, #C79E22 75%, #FFF3B0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border {
+            border: 2px solid #E5C158;
+            box-shadow: 0 0 15px rgba(229, 193, 88, 0.25), inset 0 0 10px rgba(229, 193, 88, 0.15);
+        }
+
+        .gold-button {
+            background: linear-gradient(135deg, #FFF3B0 0%, #E5C158 50%, #9A7B1C 100%);
+            color: #270106;
+            transition: all 0.3s ease;
+        }
+        .gold-button:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 0 20px rgba(229, 193, 88, 0.6);
+        }
+
+        /* Keyframe Animations */
+        @keyframes floatingGold {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+            50% { transform: translateY(-15px) rotate(180deg); opacity: 0.8; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 0.2; }
+        }
+        .animate-floating {
+            animation: floatingGold 8s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(229,193,88,0.4)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 18px rgba(229,193,88,0.8)); transform: scale(1.03); }
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-ruby-900 text-amber-50 font-sans overflow-x-hidden select-none">
+
+    <!-- AUDIO PLAYER -->
+    <audio id="bg-music" loop>
+        <!-- Beauty in White Audio Track -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-piano-116084.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- FLOATING AUDIO CONTROL -->
+    <button id="music-toggle" onclick="toggleMusic()" aria-label="Audio Controls" class="fixed bottom-20 right-5 z-40 w-12 h-12 bg-ruby-800 border-2 border-gold-bright rounded-full flex items-center justify-center text-gold-bright shadow-2xl transition-all duration-300 hidden hover:scale-110">
+        <i id="music-icon" class="fas fa-music text-base"></i>
+    </button>
+
+    <!-- FULLSCREEN COVER OVERLAY (ROYAL PALEMBANG WELCOME) -->
+    <div id="cover-overlay" class="fixed inset-0 z-50 bg-songket-ruby flex flex-col justify-between items-center text-center p-6 transition-opacity duration-1000 ease-in-out">
+        
+        <!-- Top Ornament -->
+        <div class="mt-6 pt-4 animate-pulse-glow">
+            <!-- Palembang Crown / Tanjak SVG Motif -->
+            <svg class="w-16 h-16 mx-auto text-gold-bright fill-current" viewBox="0 0 24 24">
+                <path d="M12,2L15,8L21,9L16.5,14L18,20L12,17L6,20L7.5,14L3,9L9,8L12,2Z"/>
+            </svg>
+            <p class="font-cinzel text-xs tracking-[0.35em] text-gold-light mt-2 uppercase font-bold">Undangan Pernikahan Royal</p>
+        </div>
+
+        <!-- Center Card -->
+        <div class="w-full max-w-sm bg-ruby-900/90 border-2 border-gold-bright rounded-3xl p-8 backdrop-blur-md shadow-2xl relative my-auto">
+            <!-- Frame Corner Accents -->
+            <div class="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-gold-light"></div>
+            <div class="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-gold-light"></div>
+            <div class="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-gold-light"></div>
+            <div class="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-gold-light"></div>
+
+            <p class="font-script text-3xl text-gold-bright mb-1">Walimatul 'Ursy</p>
+            <h1 class="font-cinzel text-4xl font-extrabold gold-text tracking-wide mb-2">Dono & Dini</h1>
+            <p class="font-playfair italic text-xs text-amber-200/90">Minggu, 15 November 2026</p>
+
+            <div class="my-6 border-t border-b border-gold/40 py-3">
+                <p class="text-[11px] text-amber-100 font-light uppercase tracking-wider">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+                <p class="font-cinzel text-base font-bold text-gold-light mt-1">Tamu Undangan Istimewa</p>
+            </div>
+
+            <button onclick="openInvitation()" class="w-full py-3.5 px-6 gold-button font-cinzel text-xs font-extrabold rounded-full tracking-wider uppercase flex items-center justify-center gap-2 shadow-2xl">
+                <i class="fas fa-envelope-open text-sm"></i> Buka Undangan
+            </button>
+        </div>
+
+        <!-- Bottom Ornament -->
+        <p class="text-[10px] text-gold-light/70 font-cinzel mb-4 tracking-widest uppercase">Palembang Glamour Songket Series</p>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <main id="app-content" class="max-w-md mx-auto bg-songket-dark border-x-2 border-gold/30 min-h-screen relative pb-24 shadow-2xl">
+
+        <!-- HERO SECTION -->
+        <section id="home" class="relative min-h-screen bg-songket-ruby flex flex-col items-center justify-center text-center p-6 border-b-2 border-gold/40">
+            <div class="absolute inset-0 bg-black/40"></div>
+
+            <div class="relative z-10 space-y-4">
+                <div class="w-20 h-20 mx-auto rounded-full bg-ruby-900 border-2 border-gold-bright flex items-center justify-center shadow-2xl animate-pulse-glow">
+                    <span class="font-script text-4xl text-gold-bright">D&D</span>
+                </div>
+
+                <p class="font-cinzel text-xs uppercase tracking-[0.3em] text-gold-light font-bold">The Wedding Of</p>
+                <h1 class="font-cinzel text-5xl font-black gold-text tracking-wider">Dono & Dini</h1>
+                <p class="font-playfair italic text-sm text-amber-200">15 November 2026 • Palembang</p>
+
+                <!-- Palembang Songket Motif Divider -->
+                <div class="flex items-center justify-center gap-3 pt-4 text-gold-bright">
+                    <div class="h-[1px] w-12 bg-gradient-to-r from-transparent to-gold-bright"></div>
+                    <i class="fas fa-diamond text-xs"></i>
+                    <i class="fas fa-crown text-base"></i>
+                    <i class="fas fa-diamond text-xs"></i>
+                    <div class="h-[1px] w-12 bg-gradient-to-l from-transparent to-gold-bright"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUOTE AR-RUM 21 -->
+        <section class="py-12 px-6 text-center border-b border-gold/20 relative">
+            <div class="gold-border p-6 rounded-2xl bg-ruby-900/80 backdrop-blur-sm relative">
+                <i class="fas fa-quote-left text-2xl text-gold-bright/60 mb-3 block"></i>
+                <p class="font-playfair italic text-xs leading-relaxed text-amber-100 mb-4">
+                    "Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+                </p>
+                <p class="font-cinzel text-xs font-bold text-gold-bright">QS. Ar-Rum: 21</p>
+            </div>
+        </section>
+
+        <!-- COUPLE PROFILES -->
+        <section id="profile" class="py-12 px-6 space-y-10 border-b border-gold/20">
+            <div class="text-center">
+                <p class="font-cinzel text-xs text-gold-light uppercase tracking-widest font-bold">Mempelai Berbahagia</p>
+                <h2 class="font-cinzel text-2xl font-bold text-gold-bright mt-1">Pengantin Royal</h2>
+            </div>
+
+            <!-- GROOM (DONO) -->
+            <div class="text-center space-y-4">
+                <div class="relative w-40 h-52 mx-auto">
+                    <div class="absolute inset-0 border-2 border-gold-bright rounded-2xl transform -rotate-3 bg-ruby-800"></div>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600" alt="Dono" class="w-full h-full object-cover rounded-2xl border-2 border-gold-light relative z-10 shadow-2xl">
+                </div>
+                <div>
+                    <h3 class="font-cinzel text-2xl font-bold text-gold-bright">Dono, S.T.</h3>
+                    <p class="text-xs text-amber-200/90 mt-1">Putra dari Bapak San & Ibu Siti</p>
+                    <a href="https://instagram.com" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-gold-bright hover:underline mt-2 bg-ruby-800/80 border border-gold/40 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> @dono.palembang
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center text-gold-bright">
+                <i class="fas fa-heart text-xl animate-pulse"></i>
+            </div>
+
+            <!-- BRIDE (DINI) -->
+            <div class="text-center space-y-4">
+                <div class="relative w-40 h-52 mx-auto">
+                    <div class="absolute inset-0 border-2 border-gold-bright rounded-2xl transform rotate-3 bg-ruby-800"></div>
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Dini" class="w-full h-full object-cover rounded-2xl border-2 border-gold-light relative z-10 shadow-2xl">
+                </div>
+                <div>
+                    <h3 class="font-cinzel text-2xl font-bold text-gold-bright">Dini, S.E.</h3>
+                    <p class="text-xs text-amber-200/90 mt-1">Putri dari Bapak Jaemin & Ibu Karin</p>
+                    <a href="https://instagram.com" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-gold-bright hover:underline mt-2 bg-ruby-800/80 border border-gold/40 px-3 py-1 rounded-full">
+                        <i class="fab fa-instagram"></i> @dini.palembang
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- COUNTDOWN TIMER -->
+        <section class="py-12 px-6 bg-songket-ruby text-center relative border-b border-gold/30">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative z-10 space-y-6">
+                <h2 class="font-cinzel text-xl font-bold text-gold-bright">Menuju Hari Istimewa</h2>
+                
+                <div class="grid grid-cols-4 gap-2" id="countdown">
+                    <div class="bg-ruby-900/90 border border-gold/60 p-3 rounded-xl shadow-xl">
+                        <span id="days" class="font-cinzel text-2xl font-extrabold text-gold-bright block">00</span>
+                        <span class="text-[9px] uppercase text-amber-200 font-semibold">Hari</span>
+                    </div>
+                    <div class="bg-ruby-900/90 border border-gold/60 p-3 rounded-xl shadow-xl">
+                        <span id="hours" class="font-cinzel text-2xl font-extrabold text-gold-bright block">00</span>
+                        <span class="text-[9px] uppercase text-amber-200 font-semibold">Jam</span>
+                    </div>
+                    <div class="bg-ruby-900/90 border border-gold/60 p-3 rounded-xl shadow-xl">
+                        <span id="minutes" class="font-cinzel text-2xl font-extrabold text-gold-bright block">00</span>
+                        <span class="text-[9px] uppercase text-amber-200 font-semibold">Menit</span>
+                    </div>
+                    <div class="bg-ruby-900/90 border border-gold/60 p-3 rounded-xl shadow-xl">
+                        <span id="seconds" class="font-cinzel text-2xl font-extrabold text-gold-bright block">00</span>
+                        <span class="text-[9px] uppercase text-amber-200 font-semibold">Detik</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVENT DETAILS -->
+        <section id="event" class="py-12 px-6 space-y-6 border-b border-gold/20">
+            <div class="text-center">
+                <p class="font-cinzel text-xs text-gold-light uppercase tracking-widest font-bold">Waktu & Lokasi</p>
+                <h2 class="font-cinzel text-2xl font-bold text-gold-bright mt-1">Rangkaian Acara</h2>
+            </div>
+
+            <!-- AKAD NIKAH -->
+            <div class="gold-border p-6 rounded-2xl bg-ruby-900/60 text-center space-y-3 backdrop-blur-sm">
+                <div class="w-12 h-12 mx-auto bg-ruby-800 border border-gold-bright rounded-full flex items-center justify-center text-gold-bright text-lg">
+                    <i class="fas fa-ring"></i>
+                </div>
+                <h3 class="font-cinzel text-xl font-bold text-gold-bright">Akad Nikah</h3>
+                <p class="text-xs text-amber-100"><i class="far fa-clock text-gold-bright mr-1"></i> 08.00 - 10.00 WIB</p>
+                <p class="text-xs text-amber-200"><i class="fas fa-map-marker-alt text-gold-bright mr-1"></i> Kediaman Mempelai Wanita</p>
+                <p class="text-xs text-amber-300/80 font-light">Jl. Mangga No. 15, Palembang, Sumatera Selatan</p>
+            </div>
+
+            <!-- RESEPSI -->
+            <div class="gold-border p-6 rounded-2xl bg-ruby-900/60 text-center space-y-3 backdrop-blur-sm">
+                <div class="w-12 h-12 mx-auto bg-ruby-800 border border-gold-bright rounded-full flex items-center justify-center text-gold-bright text-lg">
+                    <i class="fas fa-glass-cheers"></i>
+                </div>
+                <h3 class="font-cinzel text-xl font-bold text-gold-bright">Resepsi Pernikahan</h3>
+                <p class="text-xs text-amber-100"><i class="far fa-clock text-gold-bright mr-1"></i> 11.00 - 15.00 WIB</p>
+                <p class="text-xs text-amber-200"><i class="fas fa-map-marker-alt text-gold-bright mr-1"></i> Ballroom Gedung Palembang Glamour</p>
+                <p class="text-xs text-amber-300/80 font-light">Jl. Mangga No. 15, Palembang, Sumatera Selatan</p>
+            </div>
+
+            <a href="https://maps.google.com/?q=Jl.+Mangga,+Palembang" target="_blank" class="w-full py-3.5 gold-button font-cinzel text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-2xl uppercase tracking-wider">
+                <i class="fas fa-map-marked-alt text-sm"></i> Petunjuk Peta Google Maps
+            </a>
+        </section>
+
+        <!-- GALLERY PREWEDDING -->
+        <section id="gallery" class="py-12 px-6 border-b border-gold/20">
+            <div class="text-center mb-8">
+                <p class="font-cinzel text-xs text-gold-light uppercase tracking-widest font-bold">Momen Kebersamaan</p>
+                <h2 class="font-cinzel text-2xl font-bold text-gold-bright mt-1">Galeri Foto</h2>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=600" onclick="openLightbox(this.src)" class="w-full h-44 object-cover rounded-xl border border-gold/50 cursor-pointer hover:opacity-80 transition shadow-lg" alt="Gallery 1">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600" onclick="openLightbox(this.src)" class="w-full h-56 object-cover rounded-xl border border-gold/50 cursor-pointer hover:opacity-80 transition shadow-lg" alt="Gallery 2">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=600" onclick="openLightbox(this.src)" class="w-full h-56 object-cover rounded-xl border border-gold/50 cursor-pointer hover:opacity-80 transition shadow-lg -mt-12" alt="Gallery 3">
+                <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&q=80&w=600" onclick="openLightbox(this.src)" class="w-full h-44 object-cover rounded-xl border border-gold/50 cursor-pointer hover:opacity-80 transition shadow-lg" alt="Gallery 4">
+            </div>
+        </section>
+
+        <!-- DIGITAL GIFT / AMPLOP DIGITAL -->
+        <section class="py-12 px-6 border-b border-gold/20">
+            <div class="text-center mb-8">
+                <p class="font-cinzel text-xs text-gold-light uppercase tracking-widest font-bold">Tanda Kasih</p>
+                <h2 class="font-cinzel text-2xl font-bold text-gold-bright mt-1">Amplop Digital</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- BANK BCA -->
+                <div class="gold-border p-5 rounded-2xl bg-ruby-900/80 relative backdrop-blur-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-sm text-blue-400">BCA</span>
+                        <i class="fas fa-credit-card text-gold-bright"></i>
+                    </div>
+                    <p class="font-mono text-lg font-bold text-gold-light">7720912839</p>
+                    <p class="text-xs text-amber-200 mb-3">a.n. Dono</p>
+                    <button onclick="copyAccount('7720912839', 'BCA')" class="w-full py-2 border border-gold-bright text-gold-bright text-xs rounded-lg hover:bg-gold-bright hover:text-ruby-900 transition font-bold">
+                        <i class="far fa-copy mr-1"></i> Salin No. Rekening
+                    </button>
+                </div>
+
+                <!-- BANK MANDIRI -->
+                <div class="gold-border p-5 rounded-2xl bg-ruby-900/80 relative backdrop-blur-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-sm text-yellow-500">MANDIRI</span>
+                        <i class="fas fa-credit-card text-gold-bright"></i>
+                    </div>
+                    <p class="font-mono text-lg font-bold text-gold-light">1130019283741</p>
+                    <p class="text-xs text-amber-200 mb-3">a.n. Dini</p>
+                    <button onclick="copyAccount('1130019283741', 'Mandiri')" class="w-full py-2 border border-gold-bright text-gold-bright text-xs rounded-lg hover:bg-gold-bright hover:text-ruby-900 transition font-bold">
+                        <i class="far fa-copy mr-1"></i> Salin No. Rekening
+                    </button>
+                </div>
+
+                <!-- QRIS -->
+                <div class="gold-border p-5 rounded-2xl bg-ruby-900/80 text-center backdrop-blur-sm">
+                    <i class="fas fa-qrcode text-3xl text-gold-bright mb-2"></i>
+                    <h4 class="font-cinzel text-xs font-bold text-gold-bright mb-1">QRIS Hadiah Digital</h4>
+                    <p class="text-[11px] text-amber-200/80 mb-3">Scan kode QR untuk kirim hadiah</p>
+                    <button onclick="openLightbox('https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=AmplopPalembangDonoDini')" class="py-2 px-4 gold-button font-cinzel text-xs font-bold rounded-lg inline-flex items-center gap-1.5 shadow-md">
+                        <i class="fas fa-expand"></i> Tampilkan QR Code
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP & WISHES -->
+        <section id="rsvp" class="py-12 px-6">
+            <div class="text-center mb-8">
+                <p class="font-cinzel text-xs text-gold-light uppercase tracking-widest font-bold">Doa & Konfirmasi</p>
+                <h2 class="font-cinzel text-2xl font-bold text-gold-bright mt-1">Ucapan & RSVP</h2>
+            </div>
+
+            <form id="rsvp-form" onsubmit="submitWish(event)" class="gold-border p-5 rounded-2xl bg-ruby-900/80 space-y-4 mb-8">
+                <div>
+                    <label class="block text-xs text-gold-light font-bold mb-1">Nama Lengkap</label>
+                    <input type="text" id="guest-name" required placeholder="Nama Anda" class="w-full px-3 py-2 text-xs bg-ruby-900 border border-gold/40 rounded-lg text-amber-100 focus:outline-none focus:border-gold-bright">
+                </div>
+                <div>
+                    <label class="block text-xs text-gold-light font-bold mb-1">Konfirmasi Kehadiran</label>
+                    <select id="guest-status" class="w-full px-3 py-2 text-xs bg-ruby-900 border border-gold/40 rounded-lg text-amber-100 focus:outline-none focus:border-gold-bright">
+                        <option value="Hadir">Hadir</option>
+                        <option value="Tidak Hadir">Tidak Hadir</option>
+                        <option value="Masih Ragu">Masih Ragu</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gold-light font-bold mb-1">Jumlah Tamu</label>
+                    <input type="number" id="guest-count" min="1" max="5" value="1" class="w-full px-3 py-2 text-xs bg-ruby-900 border border-gold/40 rounded-lg text-amber-100 focus:outline-none focus:border-gold-bright">
+                </div>
+                <div>
+                    <label class="block text-xs text-gold-light font-bold mb-1">Pesan / Doa Restu</label>
+                    <textarea id="guest-message" rows="3" required placeholder="Tuliskan ucapan & doa..." class="w-full px-3 py-2 text-xs bg-ruby-900 border border-gold/40 rounded-lg text-amber-100 focus:outline-none focus:border-gold-bright"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3 gold-button font-cinzel text-xs font-bold rounded-lg shadow-xl uppercase">
+                    Kirim Ucapan
+                </button>
+            </form>
+
+            <div class="space-y-3">
+                <h3 class="font-cinzel text-xs font-bold text-gold-light flex justify-between items-center">
+                    <span>Doa Restu Tamu Undangan</span>
+                    <span id="wish-count" class="bg-ruby-800 border border-gold/40 px-2 py-0.5 rounded-full text-gold-bright text-[10px]">0</span>
+                </h3>
+                <div id="wishes-list" class="space-y-2.5 max-h-64 overflow-y-auto pr-1">
+                    <!-- Wish items rendered here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="py-8 px-6 text-center bg-songket-ruby border-t border-gold/30">
+            <h3 class="font-cinzel text-lg font-bold gold-text">Dono & Dini</h3>
+            <p class="text-[10px] text-amber-200/80 mt-1">Palembang Glamour Songket Digital Invitation</p>
+        </footer>
+
+    </main>
+
+    <!-- NAVIGATION DOCK -->
+    <nav class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-ruby-900/95 border border-gold-bright rounded-full px-5 py-2.5 flex items-center gap-6 shadow-2xl backdrop-blur-md">
+        <a href="#home" class="text-gold-bright hover:text-white transition text-center">
+            <i class="fas fa-home text-xs"></i>
+            <span class="block text-[8px] mt-0.5">Beranda</span>
+        </a>
+        <a href="#profile" class="text-gold-bright hover:text-white transition text-center">
+            <i class="fas fa-heart text-xs"></i>
+            <span class="block text-[8px] mt-0.5">Mempelai</span>
+        </a>
+        <a href="#event" class="text-gold-bright hover:text-white transition text-center">
+            <i class="fas fa-calendar-alt text-xs"></i>
+            <span class="block text-[8px] mt-0.5">Acara</span>
+        </a>
+        <a href="#gallery" class="text-gold-bright hover:text-white transition text-center">
+            <i class="fas fa-images text-xs"></i>
+            <span class="block text-[8px] mt-0.5">Galeri</span>
+        </a>
+        <a href="#rsvp" class="text-gold-bright hover:text-white transition text-center">
+            <i class="fas fa-comment-dots text-xs"></i>
+            <span class="block text-[8px] mt-0.5">RSVP</span>
+        </a>
+    </nav>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 hidden items-center justify-center p-4" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] rounded-xl border-2 border-gold-bright object-contain">
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed top-12 left-1/2 -translate-x-1/2 z-50 gold-button text-ruby-900 font-bold text-xs px-5 py-2 rounded-full shadow-2xl transition-all duration-300 opacity-0 pointer-events-none font-cinzel">
+        Tersalin!
+    </div>
+
+    <script>
+        // AUDIO & COVER CONTROLS
+        const audio = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        function openInvitation() {
+            const cover = document.getElementById('cover-overlay');
+            cover.classList.add('opacity-0', 'pointer-events-none');
+            
+            playAudio();
+            document.getElementById('music-toggle').classList.remove('hidden');
+
+            setTimeout(() => {
+                cover.style.display = 'none';
+            }, 1000);
+        }
+
+        function playAudio() {
+            audio.play().then(() => {
+                isPlaying = true;
+                updateMusicIcon();
+            }).catch(e => console.log("Audio autoplay prevented:", e));
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+            } else {
+                audio.play();
+                isPlaying = true;
+            }
+            updateMusicIcon();
+        }
+
+        function updateMusicIcon() {
+            const icon = document.getElementById('music-icon');
+            if (isPlaying) {
+                icon.className = 'fas fa-music animate-spin';
+            } else {
+                icon.className = 'fas fa-pause';
+            }
+        }
+
+        // COUNTDOWN TIMER (15 November 2026)
+        const targetDate = new Date('November 15, 2026 08:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            } else {
+                document.getElementById('countdown').innerHTML = `<div class="col-span-4 p-3 bg-ruby-800 text-gold-bright font-cinzel font-bold text-xs rounded-xl border border-gold">Selamat Atas Pernikahan Dono & Dini!</div>`;
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // LIGHTBOX
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+        }
+
+        // COPY ACCOUNT
+        function copyAccount(text, bank) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            showToast(`No. Rekening ${bank} Berhasil Disalin!`);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // RSVP & WISHES LOCAL STORAGE
+        const defaultWishes = [
+            { name: 'Siti Rahma', status: 'Hadir', message: 'Selamat Dono dan Dini! Semoga menjadi keluarga sakinah mawaddah warahmah.', time: 'Baru saja' },
+            { name: 'Budi Santoso', status: 'Hadir', message: 'Selamat menempuh hidup baru sahabatku, berkah selalu!', time: '1 jam yang lalu' }
+        ];
+
+        function getWishes() {
+            const stored = localStorage.getItem('palembang_wishes');
+            return stored ? JSON.parse(stored) : defaultWishes;
+        }
+
+        function renderWishes() {
+            const wishes = getWishes();
+            const container = document.getElementById('wishes-list');
+            document.getElementById('wish-count').innerText = wishes.length;
+
+            container.innerHTML = wishes.map(w => `
+                <div class="p-3 bg-ruby-900 border border-gold/30 rounded-xl space-y-1">
+                    <div class="flex justify-between items-center">
+                        <span class="font-cinzel font-bold text-xs text-gold-bright">${escapeHtml(w.name)}</span>
+                        <span class="text-[9px] bg-ruby-800 border border-gold/40 text-gold-light px-2 py-0.5 rounded-full font-semibold">${escapeHtml(w.status)}</span>
+                    </div>
+                    <p class="text-xs text-amber-100 font-light leading-relaxed">${escapeHtml(w.message)}</p>
+                    <span class="text-[8px] text-amber-300/60 block text-right">${w.time}</span>
+                </div>
+            `).join('');
+        }
+
+        function submitWish(e) {
+            e.preventDefault();
+            const name = document.getElementById('guest-name').value;
+            const status = document.getElementById('guest-status').value;
+            const message = document.getElementById('guest-message').value;
+
+            const wishes = getWishes();
+            wishes.unshift({ name, status, message, time: 'Baru saja' });
+
+            localStorage.setItem('palembang_wishes', JSON.stringify(wishes));
+            renderWishes();
+
+            document.getElementById('rsvp-form').reset();
+            showToast('Ucapan & RSVP berhasil terkirim!');
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        window.onload = function() {
+            renderWishes();
+        };
+    </script>
+</body>
+</html>
+```
